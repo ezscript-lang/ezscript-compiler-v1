@@ -1,13 +1,3 @@
-import "sys"                    # Import the system module
-
-str y = "1234"                  # Create a string called y with the contents 1234
-func main() -> int              # Create a function called main which returns an integer
-    print("Hello World! "+y)    # Print the message "Hello, World!". On the same line print value of y.
-    int res = 1 + 20            # Create a new variable with the value of 1 + 20
-    print(f"1 + 1 is {res}")    # Use a format string to insert the res variable where we like
-    return 1                    # Return 1, this will be used in the exit() function
-end
-
-if __name__ == "__main__"       # Only execute the following code if we are the main file
-    sys.exit(main())            # Exit with the return code generated from main
-end
+let x = 1 + 2 + 3;
+let y = 8;
+exit(x);
