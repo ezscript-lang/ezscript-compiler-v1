@@ -1,7 +1,7 @@
-cmake_minimum_required(VERSION 3.20)
+cmake_minimum_required(VERSION 3.10)
 
-project(hydrogen)
+project(ezscript)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(hydro src/main.cpp)
+add_executable(ezscript src/main.cpp)

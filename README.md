@@ -16,7 +16,7 @@ cmake -S . -B build
 cmake --build build
 ```
 
-Executable will be `hydro` in the `build/` directory.
+Executable will be `ezscript` in the `build/` directory.
 
 ## Credits
 
