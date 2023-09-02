@@ -1,11 +1,8 @@
 #pragma once
 
-#ifdef __MACH__
-#define EXIT_SYSCALL "0x2000001"
-#endif
-
 #ifdef __linux__
 #define EXIT_SYSCALL "60"
+#define WRITE_SYSCALL "1"
 #endif
 
 #include "parser.hpp"
@@ -74,6 +71,16 @@ public:
                 gen->m_output << "    mov rax, " << EXIT_SYSCALL << "\n";
                 gen->pop("rdi");
                 gen->m_output << "    syscall\n";
+            }
+            void operator()(const NodeStmtPrint* stmt_exit) const
+            {
+                gen->gen_expr(stmt_exit->expr);
+                gen->pop("rdi");
+                gen->m_output << "    mov eax, 4              ;set the next syscall to write\n";
+                gen->m_output << "    mov ebx, " << WRITE_SYSCALL << "              ;set the fd to stdout\n";
+                gen->m_output << "    mov ecx, rdi            ;set the output to message\n";
+                gen->m_output << "    mov edx, 5              ;set edx to the length of the message\n";
+                gen->m_output << "    int 0x80                ;syscall\n";
             }
             void operator()(const NodeStmtLet* stmt_let) const
             {
