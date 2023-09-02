@@ -1,5 +1,13 @@
 #pragma once
 
+#ifdef __MACH__
+#define EXIT_SYSCALL "0x2000001"
+#endif
+
+#ifdef __linux__
+#define EXIT_SYSCALL "60"
+#endif
+
 #include "parser.hpp"
 #include <cassert>
 #include <unordered_map>
@@ -63,7 +71,7 @@ public:
             void operator()(const NodeStmtExit* stmt_exit) const
             {
                 gen->gen_expr(stmt_exit->expr);
-                gen->m_output << "    mov rax, 60\n";
+                gen->m_output << "    mov rax, " << EXIT_SYSCALL << "\n";
                 gen->pop("rdi");
                 gen->m_output << "    syscall\n";
             }
@@ -90,7 +98,7 @@ public:
             gen_stmt(stmt);
         }
 
-        m_output << "    mov rax, 60\n";
+        m_output << "    mov rax, " << EXIT_SYSCALL << "\n";
         m_output << "    mov rdi, 0\n";
         m_output << "    syscall\n";
         return m_output.str();

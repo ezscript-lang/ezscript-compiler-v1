@@ -39,8 +39,15 @@ int main(int argc, char* argv[])
         file << generator.gen_prog();
     }
 
+    #ifdef __MACH__
+    system("nasm -f macho64 out.asm");
+    system("ld -L/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/lib -lSystem -o out out.o -macosx_version_min 12.6.0");
+    #endif
+
+    #ifdef __linux__
     system("nasm -felf64 out.asm");
     system("ld -o out out.o");
+    #endif
 
     return EXIT_SUCCESS;
 }
