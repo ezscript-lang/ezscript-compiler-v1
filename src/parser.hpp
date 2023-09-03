@@ -41,7 +41,7 @@ struct NodeStmtExit {
     NodeExpr* expr;
 };
 
-struct NodeStmtPrint {
+struct NodeStmtPrintRaw {
     NodeExpr* expr;
 };
 
@@ -51,7 +51,7 @@ struct NodeStmtLet {
 };
 
 struct NodeStmt {
-    std::variant<NodeStmtExit*, NodeStmtPrint*, NodeStmtLet*> var;
+    std::variant<NodeStmtExit*, NodeStmtPrintRaw*, NodeStmtLet*> var;
 };
 
 struct NodeProg {
@@ -139,11 +139,11 @@ public:
             stmt->var = stmt_exit;
             return stmt;
         }
-        else if (peek().value().type == TokenType::print && peek(1).has_value()
+        else if (peek().value().type == TokenType::printRaw && peek(1).has_value()
             && peek(1).value().type == TokenType::open_paren) {
             consume();
             consume();
-            auto stmt_print = m_allocator.alloc<NodeStmtPrint>();
+            auto stmt_print = m_allocator.alloc<NodeStmtPrintRaw>();
             if (auto node_expr = parse_expr()) {
                 stmt_print->expr = node_expr.value();
             }

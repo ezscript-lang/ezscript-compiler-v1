@@ -72,15 +72,16 @@ public:
                 gen->pop("rdi");
                 gen->m_output << "    syscall\n";
             }
-            void operator()(const NodeStmtPrint* stmt_exit) const
+            void operator()(const NodeStmtPrintRaw* stmt_printRaw) const
             {
-                gen->gen_expr(stmt_exit->expr);
-                gen->pop("rdi");
-                gen->m_output << "    mov eax, 4              ;set the next syscall to write\n";
-                gen->m_output << "    mov ebx, " << WRITE_SYSCALL << "              ;set the fd to stdout\n";
-                gen->m_output << "    mov ecx, rdi            ;set the output to message\n";
-                gen->m_output << "    mov edx, 5              ;set edx to the length of the message\n";
-                gen->m_output << "    int 0x80                ;syscall\n";
+                gen->gen_expr(stmt_printRaw->expr);
+                gen->pop("rax");
+                gen->m_output << "    mov [res], rax\n";
+                gen->m_output << "    mov rax, " << WRITE_SYSCALL << "              ;set the next syscall to write\n";
+                gen->m_output << "    mov rdi, 1              ;set the fd to stdout\n";
+                gen->m_output << "    mov rsi, res            ;set the message\n";
+                gen->m_output << "    mov rdx, 8              ;set edx to the length of the message\n";
+                gen->m_output << "    syscall                 ;syscall\n";
             }
             void operator()(const NodeStmtLet* stmt_let) const
             {
@@ -99,7 +100,10 @@ public:
 
     [[nodiscard]] std::string gen_prog()
     {
-        m_output << "global _start\n_start:\n";
+        m_output << "section .bss\n";
+        m_output << "    res: resq 8\n";
+        m_output << "section .text\n";
+        m_output << "    global _start\n_start:\n";
 
         for (const NodeStmt* stmt : m_prog.stmts) {
             gen_stmt(stmt);

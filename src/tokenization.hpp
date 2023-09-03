@@ -3,7 +3,7 @@
 #include <string>
 #include <vector>
 
-enum class TokenType { exit, print, int_lit, semi, open_paren, close_paren, ident, let, eq, plus };
+enum class TokenType { exit, printRaw, int_lit, semi, open_paren, close_paren, ident, let, eq, plus };
 
 struct Token {
     TokenType type;
@@ -32,8 +32,8 @@ public:
                     buf.clear();
                     continue;
                 }
-                else if (buf == "print") {
-                    tokens.push_back({ .type = TokenType::print });
+                else if (buf == "printRaw") {
+                    tokens.push_back({ .type = TokenType::printRaw });
                     buf.clear();
                     continue;
                 }

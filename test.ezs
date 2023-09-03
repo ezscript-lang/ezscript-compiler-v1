@@ -1,4 +1,28 @@
 let x = 1 + 2 + 3;
-let y = 8;
-print(y);
+
+let H = 72;
+let e = 101;
+let l = 108;
+let o = 111;
+let SPACE = 32;
+let w = 119;
+let r = 114;
+let d = 100;
+let EXCLAIM = 33;
+let NEWLINE = 10;
+
+printRaw(H);
+printRaw(e);
+printRaw(l);
+printRaw(l);
+printRaw(o);
+printRaw(SPACE);
+printRaw(w);
+printRaw(o);
+printRaw(r);
+printRaw(l);
+printRaw(d);
+printRaw(EXCLAIM);
+printRaw(NEWLINE);
+
 exit(x);
