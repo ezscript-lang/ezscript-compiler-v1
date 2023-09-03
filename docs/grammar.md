@@ -1,4 +1,4 @@
-$$
+$
 \begin{align}
     [\text{Prog}] &\to [\text{Stmt}]^* \\
     [\text{Stmt}] &\to
@@ -23,4 +23,4 @@ $$
         \text{ident}
     \end{cases}
 \end{align}
-$$
+$

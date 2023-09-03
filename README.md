@@ -6,7 +6,13 @@ This compiler is written in C++ but hopefully it will get to a point where it ca
 
 ## Building
 
-Requires `nasm` and `ld` on a Linux operating system.
+Requires `nasm` and `ld` on a 64 bit Linux operating system.
+On Windows you may use WSL (Windows Subystem for Linux).
+MacOS is not supported (for now ...) a VM (Virtual Machine) can be used instead.
+
+Or you may try this inside a GitHub Codespace!
+
+CMake and GCC are recommended for building.
 
 ```bash
 git clone https://github.com/ezscript-lang/ezscript
