@@ -158,7 +158,7 @@ public:
             return stmt;
         }
         else if (
-            peek().has_value() && peek().value().type == TokenType::let && peek(1).has_value()
+            peek().has_value() && peek().value().type == TokenType::type_int && peek(1).has_value()
             && peek(1).value().type == TokenType::ident && peek(2).has_value()
             && peek(2).value().type == TokenType::eq) {
             consume();
