@@ -19,7 +19,7 @@ $$
     \end{cases} \\ 
     [\text{Term}] &\to
     \begin{cases}
-        \mathrm{int\_lit} \\
+        \text{int}\_\text{lit} \\
         \text{ident}
     \end{cases}
 \end{align}
