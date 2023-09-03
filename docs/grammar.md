@@ -1,4 +1,4 @@
-$
+$$
 \begin{align}
     [\text{Prog}] &\to [\text{Stmt}]^* \\
     [\text{Stmt}] &\to
@@ -19,8 +19,8 @@ $
     \end{cases} \\ 
     [\text{Term}] &\to
     \begin{cases}
-        \text{int\_lit} \\
+        \mathrm{int\_lit} \\
         \text{ident}
     \end{cases}
 \end{align}
-$
+$$
