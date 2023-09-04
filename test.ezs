@@ -1,15 +1,15 @@
-int x = 1 + 2 + 3;
+let x = 1 + 2 + 3;
 
-int H = 72;
-int e = 101;
-int l = 108;
-int o = 111;
-int SPACE = 32;
-int w = 119;
-int r = 114;
-int d = 100;
-int EXCLAIM = 33;
-int NEWLINE = 10;
+let H = 72;
+let e = 101;
+let l = 108;
+let o = 111;
+let SPACE = 32;
+let w = 119;
+let r = 114;
+let d = 100;
+let EXCLAIM = 33;
+let NEWLINE = 10;
 
 printRaw(H);
 printRaw(e);
@@ -26,3 +26,4 @@ printRaw(EXCLAIM);
 printRaw(NEWLINE);
 
 exit(x);
+23233223

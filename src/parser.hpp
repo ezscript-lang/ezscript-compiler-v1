@@ -1,6 +1,7 @@
 #pragma once
 
 #include <variant>
+#include <cstring>
 
 #include "./arena.hpp"
 #include "tokenization.hpp"
@@ -60,9 +61,11 @@ struct NodeProg {
 
 class Parser {
 public:
-    inline explicit Parser(std::vector<Token> tokens)
+    inline explicit Parser(std::vector<Token> tokens, std::string src, std::string file)
         : m_tokens(std::move(tokens))
-        , m_allocator(1024 * 1024 * 4) // 4 mb
+        , m_allocator(1024 * 1024 * 5) // 5 mb
+        , m_src(std::move(src))
+        , m_file(file)
     {
     }
 
@@ -158,7 +161,7 @@ public:
             return stmt;
         }
         else if (
-            peek().has_value() && peek().value().type == TokenType::type_int && peek(1).has_value()
+            peek().has_value() && peek().value().type == TokenType::let && peek(1).has_value()
             && peek(1).value().type == TokenType::ident && peek(2).has_value()
             && peek(2).value().type == TokenType::eq) {
             consume();
@@ -190,7 +193,11 @@ public:
                 prog.stmts.push_back(stmt.value());
             }
             else {
-                std::cerr << "Invalid statement" << std::endl;
+                Token tok = peek().value();
+                std::string raw = tok.raw.value();
+                size_t pos = tok.index - 8;
+                std::cerr << raw << std::endl;;
+                std::cerr << err::make_error(m_src, m_file, "Unexpected statement", pos, 1, raw.size()) << std::endl;
                 exit(EXIT_FAILURE);
             }
         }
@@ -235,6 +242,8 @@ private:
     }
 
     const std::vector<Token> m_tokens;
+    const std::string m_src;
+    const std::string m_file;
     size_t m_index = 0;
     ArenaAllocator m_allocator;
 };

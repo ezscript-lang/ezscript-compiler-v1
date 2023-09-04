@@ -22,10 +22,10 @@ int main(int argc, char* argv[])
         contents = contents_stream.str();
     }
 
-    Tokenizer tokenizer(std::move(contents));
+    Tokenizer tokenizer(contents, argv[1]);
     std::vector<Token> tokens = tokenizer.tokenize();
 
-    Parser parser(std::move(tokens));
+    Parser parser(std::move(tokens), contents, argv[1]);
     std::optional<NodeProg> prog = parser.parse_prog();
 
     if (!prog.has_value()) {

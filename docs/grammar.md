@@ -5,7 +5,7 @@ $$
     \begin{cases}
         \text{exit}([\text{Expr}]); \\
         \text{printRaw}([\text{Expr}]); \\
-        \text{int}\space\text{ident} = [\text{Expr}];
+        \text{let}\space\text{ident} = [\text{Expr}];
     \end{cases} \\
     [\text{Expr}] &\to
     \begin{cases}
