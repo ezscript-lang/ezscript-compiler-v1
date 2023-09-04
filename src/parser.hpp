@@ -195,8 +195,7 @@ public:
             else {
                 Token tok = peek().value();
                 std::string raw = tok.raw.value();
-                size_t pos = tok.index - 8;
-                std::cerr << raw << std::endl;;
+                size_t pos = tok.index - raw.size();
                 std::cerr << err::make_error(m_src, m_file, "Unexpected statement", pos, 1, raw.size()) << std::endl;
                 exit(EXIT_FAILURE);
             }
