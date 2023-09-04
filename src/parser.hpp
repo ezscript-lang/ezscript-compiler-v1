@@ -63,7 +63,7 @@ class Parser {
 public:
     inline explicit Parser(std::vector<Token> tokens, std::string src, std::string file)
         : m_tokens(std::move(tokens))
-        , m_allocator(1024 * 1024 * 5) // 5 mb
+        , m_allocator(1024 * 1024 * 4) // 4 mb
         , m_src(std::move(src))
         , m_file(file)
     {
@@ -107,7 +107,7 @@ public:
                     return expr;
                 }
                 else {
-                    std::cerr << "Expected expression" << std::endl;
+                    std::cerr << raise_error("Unexpected") << std::endl;
                     exit(EXIT_FAILURE);
                 }
             }
@@ -133,7 +133,7 @@ public:
                 stmt_exit->expr = node_expr.value();
             }
             else {
-                std::cerr << "Invalid expression" << std::endl;
+                std::cerr << raise_error("Unexpected") << std::endl;
                 exit(EXIT_FAILURE);
             }
             try_consume(TokenType::close_paren, "Expected `)`");
@@ -151,7 +151,7 @@ public:
                 stmt_print->expr = node_expr.value();
             }
             else {
-                std::cerr << "Invalid expression" << std::endl;
+                std::cerr << raise_error("Unexpected") << std::endl;
                 exit(EXIT_FAILURE);
             }
             try_consume(TokenType::close_paren, "Expected `)`");
@@ -172,7 +172,7 @@ public:
                 stmt_let->expr = expr.value();
             }
             else {
-                std::cerr << "Invalid expression" << std::endl;
+                std::cerr << raise_error("Unexpected") << std::endl;
                 exit(EXIT_FAILURE);
             }
             try_consume(TokenType::semi, "Expected `;`");
@@ -193,9 +193,7 @@ public:
                 prog.stmts.push_back(stmt.value());
             }
             else {
-                Token tok = peek().value();
-                std::string raw = tok.raw.value();
-                std::cerr << err::make_error(m_src, m_file, "Unexpected statement", tok.index, 1, raw.size()) << std::endl;
+                std::cerr << raise_error("Unexpected") << std::endl;
                 exit(EXIT_FAILURE);
             }
         }
@@ -224,7 +222,9 @@ private:
             return consume();
         }
         else {
-            std::cerr << err_msg << std::endl;
+            Token tok = peek().value();
+            std::string raw = tok.raw.value();
+            std::cerr << err::make_error(m_src, m_file, err_msg, tok.index - 2, 1, 1) << std::endl;
             exit(EXIT_FAILURE);
         }
     }
@@ -237,6 +237,16 @@ private:
         else {
             return {};
         }
+    }
+
+    inline std::string raise_error(std::string prefix) {
+        Token tok = peek().value();
+        std::string raw = tok.raw.value();
+        std::stringstream error;
+        std::stringstream output;
+        error << prefix << " `" << raw << "`";
+        output << err::make_error(m_src, m_file, error.str(), tok.index - 1, 1, raw.size());
+        return output.str();
     }
 
     const std::vector<Token> m_tokens;

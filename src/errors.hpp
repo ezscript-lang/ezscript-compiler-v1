@@ -12,7 +12,7 @@ namespace err
         if (width == 1) {
             output << std::string((pos) + 2 , ' ') << '^';
         } else {
-            output << std::string((pos - width) + 2, ' ')
+            output << std::string((pos - width) + 3, ' ')
                 << std::string(width, '^');
         }
         return output.str();
@@ -31,7 +31,7 @@ namespace err
     std::string make_error(const std::string &src, const std::string &file, const std::string &error, size_t pos, size_t line = 1, size_t width = 1) {
         std::stringstream output;
         size_t line_start = 0;
-        size_t char_pos = 0;
+        size_t char_pos = 1;
         for (size_t i = 0; i < pos; i++) {
             if (src.at(i) == '\n') {
                 line++;
