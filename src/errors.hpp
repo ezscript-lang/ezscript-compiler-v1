@@ -12,7 +12,7 @@ namespace err
         if (width == 1) {
             output << std::string((pos) + 2 , ' ') << '^';
         } else {
-            output << std::string((pos) + 2, ' ')
+            output << std::string((pos - width) + 2, ' ')
                 << std::string(width, '^');
         }
         return output.str();
