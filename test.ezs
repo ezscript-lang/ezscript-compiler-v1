@@ -26,4 +26,3 @@ printRaw(EXCLAIM);
 printRaw(NEWLINE);
 
 exit(x);
-23233223
